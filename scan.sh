@@ -4,7 +4,7 @@ set -euo pipefail
 config="${CONFIG:-cookie.yml}"
 src="${SRC:-MyApplication.COPY}"
 dst="${DST:-MyApplication.cookiecutter}"
-out="${OUT:-cookiecutter-android-native_cpp-java}"
+out="${OUT:-cookiecutter-android-native_cpp-kotlin}"
 
 test -d $dst && rm -rf $dst
 test -d $out && rm -rf $out
@@ -131,7 +131,7 @@ main() {
     cat README.md.conf | sed \
         -e 's/__PLATAFORM__/android/g' \
         -e 's/__TEMPLATE_MODEL__/native_cpp/g' \
-        -e 's/__LANGUAGE__/java/g' >${out}/README.md
+        -e 's/__LANGUAGE__/kotlin/g' >${out}/README.md
 
     cp Makefile.test ${out}/Makefile
 
