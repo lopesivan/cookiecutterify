@@ -4,7 +4,7 @@ set -euo pipefail
 config="${CONFIG:-cookie.yml}"
 src="${SRC:-HelloAndroid.COPY}"
 dst="${DST:-HelloAndroid.cookiecutter}"
-out="${OUT:-cookiecutter-android-game_activity_cpp-java}"
+out="${OUT:-cookiecutter-android-hello_android-kotlin}"
 
 test -d $dst && rm -rf $dst
 test -d $out && rm -rf $out
@@ -130,8 +130,8 @@ main() {
     #make_cookiecutter_json
     cat README.md.conf | sed \
         -e 's/__PLATAFORM__/android/g' \
-        -e 's/__TEMPLATE_MODEL__/game_activity_cpp/g' \
-        -e 's/__LANGUAGE__/java/g' >${out}/README.md
+        -e 's/__TEMPLATE_MODEL__/hello_android/g' \
+        -e 's/__LANGUAGE__/kotlin/g' >${out}/README.md
 
     cp Makefile.test ${out}/Makefile
 
