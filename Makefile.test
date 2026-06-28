@@ -1,0 +1,7 @@
+all: test
+
+test:
+	PYENV_VERSION=3.12.6 cookiecutter .
+
+clean:
+	rm -rf MyApplication/

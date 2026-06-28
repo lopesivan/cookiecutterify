@@ -1,0 +1,34 @@
+---
+variables:
+  app_name:
+    value: My Application
+  package_name:
+    value: com.example.myapplication
+  main_activity:
+    value: MainActivity
+  java_jni_method:
+    value: stringFromJNI
+  __app_name_without_space:
+    value: MyApplication
+  __app_name_without_space_lower:
+    value: myapplication
+  __app_name_without_space_upper:
+    value: MYAPPLICATION
+  __java_jni_interface:
+    value: Java_com_example_myapplication
+  __package_dir:
+    value: __PACKAGE__
+  target_sdk_version:
+    value: 36
+  target_api_version:
+    value: 31
+  min_sdk_version:
+    value: 24
+  sdk_dir:
+    value: /home/ivan/Android/Sdk
+  cmake_version:
+    value: 3.22.1
+  cpp_version:
+    value: 17
+  author:
+    value: Ivan Lopes
