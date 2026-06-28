@@ -5,11 +5,11 @@ set -o pipefail
 
 PACKAGE=$(yq -r ".variables.package_name.value" cookie.yml)
 
-# Copia o projeto original para o diretório atual
-#cp -r /workspace/AndroidStudioProjects/MyApplication .
-
 # Remove uma cópia anterior, se existir
 test -d MyApplication && rm -rf MyApplication
+
+# Copia o projeto original para o diretório atual
+#cp -r /workspace/AndroidStudioProjects/MyApplication .
 
 # Extrai o arquivo.tar.gz.
 tar xvzf MyApplication.tar.gz
