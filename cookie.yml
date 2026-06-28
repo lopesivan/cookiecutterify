@@ -9,7 +9,7 @@ variables:
   java_jni_method:
     value: stringFromJNI
   __app_name_without_space:
-    value: MyApplication
+    value: HelloAndroid
   __app_name_without_space_lower:
     value: myapplication
   __app_name_without_space_upper:

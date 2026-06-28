@@ -1,4 +1,5 @@
-
+NAME   = HelloAndroid
+COOKIE = cookiecutter-android-hello_android-kotlin
 all: init scan
 
 init:
@@ -7,10 +8,10 @@ init:
 scan:
 	./scan.sh
 
-dist: MyApplication
-	tar cvzf MyApplication.tar.gz MyApplication
+dist: $(NAME)
+	tar cvzf $(NAME).tar.gz $(NAME)
 
 clean:
 	#ls -d [[:alnum:]]*/| xargs rm -rf
-	rm -rf MyApplication MyApplication.cookiecutter MyApplication.COPY
-	rm -rf cookiecutter-android-game_activity_cpp-java
+	rm -rf $(NAME) $(NAME).cookiecutter $(NAME).COPY
+	rm -rf $(COOKIE)

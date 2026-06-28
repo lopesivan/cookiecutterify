@@ -2,8 +2,8 @@
 set -euo pipefail
 
 config="${CONFIG:-cookie.yml}"
-src="${SRC:-MyApplication.COPY}"
-dst="${DST:-MyApplication.cookiecutter}"
+src="${SRC:-HelloAndroid.COPY}"
+dst="${DST:-HelloAndroid.cookiecutter}"
 out="${OUT:-cookiecutter-android-game_activity_cpp-java}"
 
 test -d $dst && rm -rf $dst
@@ -110,15 +110,15 @@ main() {
 
     replace_file_contents
 
-    cp Makefile.orig MyApplication.cookiecutter/Makefile
-    cp -r mk MyApplication.cookiecutter/
+    cp Makefile.orig HelloAndroid.cookiecutter/Makefile
+    cp -r mk HelloAndroid.cookiecutter/
 
-    cp ui-info.py.orig MyApplication.cookiecutter/ui-info.py
+    cp ui-info.py.orig HelloAndroid.cookiecutter/ui-info.py
 
-    cp processa-taps.sh.orig MyApplication.cookiecutter/processa-taps.sh
-    cp tap-select.py.orig MyApplication.cookiecutter/tap-select.py
-    chmod +x MyApplication.cookiecutter/tap-select.py \
-        MyApplication.cookiecutter/processa-taps.sh
+    cp processa-taps.sh.orig HelloAndroid.cookiecutter/processa-taps.sh
+    cp tap-select.py.orig HelloAndroid.cookiecutter/tap-select.py
+    chmod +x HelloAndroid.cookiecutter/tap-select.py \
+        HelloAndroid.cookiecutter/processa-taps.sh
 
     rename_files
 

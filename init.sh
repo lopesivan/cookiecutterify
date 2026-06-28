@@ -6,25 +6,25 @@ set -o pipefail
 PACKAGE=$(yq -r ".variables.package_name.value" cookie.yml)
 
 # Copia o projeto original para o diretório atual
-#cp -r /workspace/AndroidStudioProjects/MyApplication .
+#cp -r /workspace/AndroidStudioProjects/HelloAndroid .
 
 # Remove uma cópia anterior, se existir
-test -d MyApplication && rm -rf MyApplication
+test -d HelloAndroid && rm -rf HelloAndroid
 
 # Extrai o arquivo.tar.gz.
-tar xvzf MyApplication.tar.gz
+tar xvzf HelloAndroid.tar.gz
 
 # Remove uma cópia anterior, se existir
-test -d MyApplication.COPY && rm -rf MyApplication.COPY
+test -d HelloAndroid.COPY && rm -rf HelloAndroid.COPY
 
 # Faz uma nova cópia
-cp -r MyApplication MyApplication.COPY
+cp -r HelloAndroid HelloAndroid.COPY
 
 # Remove a linha 'local.properties' do .gitignore
-sed '/local.properties/ d' -i MyApplication.COPY/.gitignore
+sed '/local.properties/ d' -i HelloAndroid.COPY/.gitignore
 
 # Entra no diretório da cópia e executa os comandos git
-pushd MyApplication.COPY >/dev/null
+pushd HelloAndroid.COPY >/dev/null
 rm -rf ./.project ./app/.project ./.settings ./app/.settings ./app/.classpath
 rm -rf .idea
 git init

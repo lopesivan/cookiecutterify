@@ -4,4 +4,4 @@ test:
 	PYENV_VERSION=3.12.6 cookiecutter .
 
 clean:
-	rm -rf MyApplication/
+	rm -rf HelloAndroid/
