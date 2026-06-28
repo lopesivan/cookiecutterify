@@ -31,6 +31,7 @@ for path in \
     ./.settings \
     ./app/.settings \
     ./app/.classpath \
+    ./kls_database.db \
     ./.idea \
     ./.git \
     ./.google; do
@@ -41,21 +42,25 @@ git add .
 git commit -m "first commit"
 git clean -dfx
 
-root_dir="${PWD}"
+#PACKAGE=com.example.android.helloandroid
 pattern="${PACKAGE//./\/}"
 
-# Process substitution: o loop é executado no shell atual, não em um subshell
 while IFS= read -r line; do
     echo "=$line="
-    dir="${line%$pattern}" # Extrai o diretório pai
+    dir="${line%$pattern}" # ex: ./app/src/main/kotlin/
+    top="${pattern%%/*}"   # ex: com
 
     pushd "$dir" >/dev/null
-    mv "$pattern" __PACKAGE__
-    rm -rf "${pattern%%/*}"
-
+    mv -- "$pattern" __PACKAGE__
+    rm -rf -- "$top"
+    # echo "mv $pattern -> __PACKAGE__"
+    # echo "rm -rf $top"
     popd >/dev/null
-done < <(find . -type d | grep "$pattern")
 
+    #done < <(find . -depth -type d | grep "$pattern")
+done < <(find . -type d | grep "$pattern$")
+#                                       ^
+#                         ancora no fim: ignora ui/theme e ui
 tree .
 popd >/dev/null
 
