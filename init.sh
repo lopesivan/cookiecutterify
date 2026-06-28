@@ -25,6 +25,7 @@ sed '/local.properties/ d' -i MyApplication.COPY/.gitignore
 
 # Entra no diretório da cópia e executa os comandos git
 pushd MyApplication.COPY >/dev/null
+rm -rf ./.project ./app/.project ./.settings ./app/.settings ./app/.classpath
 rm -rf .idea
 git init
 git add .

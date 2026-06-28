@@ -6,7 +6,6 @@
     "package_name": "com.example.{{ cookiecutter.__app_name_without_space_lower }}",
     "__package_dir": "{{ cookiecutter.package_name|replace('.', '/') }}",
     "main_activity": "MainActivity",
-    "java_jni_method": "stringFromJNI",
     "__java_jni_interface": "Java_{{ cookiecutter.package_name|replace('.', '_') }}",
     "target_sdk_version": "36",
     "target_api_version": "31",
