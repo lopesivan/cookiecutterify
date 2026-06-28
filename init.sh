@@ -11,8 +11,12 @@ PACKAGE=$(yq -r ".variables.package_name.value" cookie.yml)
 # Remove uma cópia anterior, se existir
 test -d HelloAndroid && rm -rf HelloAndroid
 
-# Extrai o arquivo.tar.gz.
-tar xvzf HelloAndroid.tar.gz
+#clona repositório
+git clone https://github.com/lopesivan/HelloAndroid
+pushd HelloAndroid
+echo aplica o patch
+git am ../HelloAndroid-custom-6a7e0c6-20260628.patch
+popd >/dev/null
 
 # Remove uma cópia anterior, se existir
 test -d HelloAndroid.COPY && rm -rf HelloAndroid.COPY
