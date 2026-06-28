@@ -4,7 +4,7 @@ set -euo pipefail
 config="${CONFIG:-cookie.yml}"
 src="${SRC:-MyApplication.COPY}"
 dst="${DST:-MyApplication.cookiecutter}"
-out="${OUT:-kiko}"
+out="${OUT:-cookiecutter-android-native_cpp-java}"
 
 test -d $dst && rm -rf $dst
 test -d $out && rm -rf $out
