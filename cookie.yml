@@ -21,9 +21,9 @@ variables:
   target_sdk_version:
     value: 37
   target_api_version:
-    value: 36
+    value: 37
   min_sdk_version:
-    value: 23
+    value: 24
   sdk_dir:
     value: /home/ivan/Android/Sdk
   cmake_version:
