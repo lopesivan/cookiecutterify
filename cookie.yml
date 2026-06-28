@@ -1,9 +1,9 @@
 ---
 variables:
   app_name:
-    value: My Application
+    value: Hello Android
   package_name:
-    value: com.example.myapplication
+    value: com.example.android.helloandroid
   main_activity:
     value: MainActivity
   java_jni_method:
@@ -19,11 +19,11 @@ variables:
   __package_dir:
     value: __PACKAGE__
   target_sdk_version:
-    value: 36
+    value: 37
   target_api_version:
-    value: 31
+    value: 36
   min_sdk_version:
-    value: 24
+    value: 23
   sdk_dir:
     value: /home/ivan/Android/Sdk
   cmake_version:
