@@ -15,7 +15,7 @@ test -d HelloAndroid && rm -rf HelloAndroid
 git clone https://github.com/lopesivan/HelloAndroid
 pushd HelloAndroid
 echo aplica o patch
-git am ../HelloAndroid-custom-6dcddb8-20260628.patch
+git am ../HelloAndroid-custom-5cc26bd-20260628.patch
 popd >/dev/null
 
 # Remove uma cópia anterior, se existir
