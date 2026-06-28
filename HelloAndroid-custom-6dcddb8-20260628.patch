@@ -1,0 +1,262 @@
+From 6dcddb8629fc67f4c8a4ee1b370a1b4fa28fc4aa Mon Sep 17 00:00:00 2001
+From: Ivan Lopes <lopesivan.ufrj@gmail.com>
+Date: Sun, 28 Jun 2026 14:45:52 -0300
+Subject: [PATCH] custom
+
+---
+ README.md            | 219 +++++++++++++++++++++++++++++++++++++------
+ app/build.gradle.kts |   1 +
+ 2 files changed, 191 insertions(+), 29 deletions(-)
+
+diff --git a/README.md b/README.md
+index 34df74b..d5390eb 100644
+--- a/README.md
++++ b/README.md
+@@ -1,42 +1,203 @@
+-# Hello Android
++Para navegação entre telas com Jetpack Compose, você usa o **Navigation Compose**. Primeiro adiciona a dependência no `app/build.gradle.kts`:
+ 
+-Hello Android is an empty Android app starter app built
+-with [Jetpack Compose](https://developer.android.com/jetpack/compose).
+-The goal of the sample is to demonstrate a simple Hello World Android app.
++```kotlin
++dependencies {
++    implementation("androidx.navigation:navigation-compose:2.9.0")
++}
++```
+ 
+-To try out this sample app, use the latest stable version
+-of [Android Studio](https://developer.android.com/studio).
+-You can clone this repository or import the
+-project from Android Studio following the steps
+-[here](https://developer.android.com/jetpack/compose/setup#sample).
++Depois reestrutura o código:
+ 
+-## Screenshots
++```kotlin
++package com.example.android.helloandroid
+ 
+-<img src="screenshots/screenshots.png" alt="Hello Android"/>
++import android.os.Bundle
++import androidx.activity.ComponentActivity
++import androidx.activity.compose.setContent
++import androidx.activity.enableEdgeToEdge
++import androidx.compose.foundation.layout.Arrangement
++import androidx.compose.foundation.layout.Column
++import androidx.compose.foundation.layout.fillMaxSize
++import androidx.compose.foundation.layout.padding
++import androidx.compose.material3.Button
++import androidx.compose.material3.CenterAlignedTopAppBar
++import androidx.compose.material3.ExperimentalMaterial3Api
++import androidx.compose.material3.MaterialTheme
++import androidx.compose.material3.Scaffold
++import androidx.compose.material3.Text
++import androidx.compose.material3.TopAppBarDefaults
++import androidx.compose.runtime.Composable
++import androidx.compose.ui.Alignment
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.unit.dp
++import androidx.navigation.NavController
++import androidx.navigation.compose.NavHost
++import androidx.navigation.compose.composable
++import androidx.navigation.compose.rememberNavController
++import com.example.android.helloandroid.ui.theme.HelloAndroidTheme
+ 
+-## Features
++// --- rotas ---
++object Routes {
++    const val SCREEN_ONE   = "screen_one"
++    const val SCREEN_TWO   = "screen_two"
++    const val SCREEN_THREE = "screen_three"
++}
+ 
+-This sample contains one screen:
+-- __MainActivity__ [screen][mainActivity] that has a text string, button, and a themed top App Bar,
+-plus preview code to see what the screen looks like without having to run
+-the app on a physical device or Android Emulator.
++class MainActivity : ComponentActivity() {
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        enableEdgeToEdge()
++        setContent {
++            HelloAndroidTheme {
++                HelloAndroidApp()
++            }
++        }
++    }
++}
+ 
+-## License
++@Composable
++fun HelloAndroidApp() {
++    val navController = rememberNavController()
+ 
+-```
+-Copyright 2025 The Android Open Source Project
++    NavHost(
++        navController = navController,
++        startDestination = Routes.SCREEN_ONE
++    ) {
++        composable(Routes.SCREEN_ONE) {
++            TelaUm(navController)
++        }
++        composable(Routes.SCREEN_TWO) {
++            TelaDois(navController)
++        }
++        composable(Routes.SCREEN_THREE) {
++            TelaTres(navController)
++        }
++    }
++}
+ 
+-Licensed under the Apache License, Version 2.0 (the "License");
+-you may not use this file except in compliance with the License.
+-You may obtain a copy of the License at:
++// --- Tela 1 ---
++@OptIn(ExperimentalMaterial3Api::class)
++@Composable
++fun TelaUm(navController: NavController) {
++    Scaffold(
++        topBar = {
++            CenterAlignedTopAppBar(
++                title = { Text("Tela 1") },
++                colors = TopAppBarDefaults.topAppBarColors(
++                    containerColor = MaterialTheme.colorScheme.primaryContainer
++                )
++            )
++        }
++    ) { innerPadding ->
++        Column(
++            modifier = Modifier
++                .fillMaxSize()
++                .padding(innerPadding),
++            verticalArrangement = Arrangement.spacedBy(16.dp),
++            horizontalAlignment = Alignment.CenterHorizontally
++        ) {
++            Text(
++                text = "Olá da Tela 1!",
++                style = MaterialTheme.typography.bodyLarge,
++                modifier = Modifier.padding(top = 32.dp)
++            )
++            Button(onClick = { navController.navigate(Routes.SCREEN_TWO) }) {
++                Text("Ir para Tela 2")
++            }
++            Button(onClick = { navController.navigate(Routes.SCREEN_THREE) }) {
++                Text("Ir para Tela 3")
++            }
++        }
++    }
++}
+ 
+-    https://www.apache.org/licenses/LICENSE-2.0
++// --- Tela 2 ---
++@OptIn(ExperimentalMaterial3Api::class)
++@Composable
++fun TelaDois(navController: NavController) {
++    Scaffold(
++        topBar = {
++            CenterAlignedTopAppBar(
++                title = { Text("Tela 2") },
++                colors = TopAppBarDefaults.topAppBarColors(
++                    containerColor = MaterialTheme.colorScheme.secondaryContainer
++                )
++            )
++        }
++    ) { innerPadding ->
++        Column(
++            modifier = Modifier
++                .fillMaxSize()
++                .padding(innerPadding),
++            verticalArrangement = Arrangement.spacedBy(16.dp),
++            horizontalAlignment = Alignment.CenterHorizontally
++        ) {
++            Text(
++                text = "Mensagem da Tela 2!",
++                style = MaterialTheme.typography.bodyLarge,
++                modifier = Modifier.padding(top = 32.dp)
++            )
++            Button(onClick = { navController.popBackStack() }) {
++                Text("Voltar")
++            }
++            Button(onClick = { navController.navigate(Routes.SCREEN_THREE) }) {
++                Text("Ir para Tela 3")
++            }
++        }
++    }
++}
+ 
+-Unless required by applicable law or agreed to in writing, software
+-distributed under the License is distributed on an "AS IS" BASIS,
+-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-See the License for the specific language governing permissions and
+-limitations under the License.
++// --- Tela 3 ---
++@OptIn(ExperimentalMaterial3Api::class)
++@Composable
++fun TelaTres(navController: NavController) {
++    Scaffold(
++        topBar = {
++            CenterAlignedTopAppBar(
++                title = { Text("Tela 3") },
++                colors = TopAppBarDefaults.topAppBarColors(
++                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
++                )
++            )
++        }
++    ) { innerPadding ->
++        Column(
++            modifier = Modifier
++                .fillMaxSize()
++                .padding(innerPadding),
++            verticalArrangement = Arrangement.spacedBy(16.dp),
++            horizontalAlignment = Alignment.CenterHorizontally
++        ) {
++            Text(
++                text = "Mensagem da Tela 3!",
++                style = MaterialTheme.typography.bodyLarge,
++                modifier = Modifier.padding(top = 32.dp)
++            )
++            Button(onClick = { navController.popBackStack() }) {
++                Text("Voltar")
++            }
++            Button(onClick = {
++                navController.navigate(Routes.SCREEN_ONE) {
++                    popUpTo(Routes.SCREEN_ONE) { inclusive = true }
++                }
++            }) {
++                Text("Voltar ao início")
++            }
++        }
++    }
++}
+ ```
+ 
+-[mainActivity]: app/src/main/kotlin/com/example/android/helloandroid/MainActivity.kt
++---
++
++Os conceitos principais usados:
++
++| conceito | função |
++|---|---|
++| `rememberNavController()` | cria e lembra o controlador de navegação |
++| `NavHost` | container que define o grafo de navegação |
++| `composable("rota")` | registra uma tela no grafo |
++| `navController.navigate("rota")` | navega para uma tela |
++| `navController.popBackStack()` | volta para a tela anterior |
++| `popUpTo(...) { inclusive = true }` | limpa a pilha de volta |
++
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+index a6a385f..022c97c 100644
+--- a/app/build.gradle.kts
++++ b/app/build.gradle.kts
+@@ -75,6 +75,7 @@ dependencies {
+     implementation(libs.androidx.ui.graphics)
+     implementation(libs.androidx.ui.tooling.preview)
+     implementation(libs.androidx.material3)
++    implementation("androidx.navigation:navigation-compose:2.9.0")
+     testImplementation(libs.junit)
+     androidTestImplementation(libs.androidx.junit)
+     androidTestImplementation(libs.androidx.espresso.core)
+-- 
+2.51.0
+
