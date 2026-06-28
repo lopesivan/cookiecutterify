@@ -13,5 +13,5 @@ dist: $(NAME)
 
 clean:
 	#ls -d [[:alnum:]]*/| xargs rm -rf
-	rm -rf $(NAME) $(NAME).cookiecutter $(NAME).COPY
 	rm -rf $(COOKIE)
+	rm -rf $(NAME) $(NAME).cookiecutter $(NAME).COPY

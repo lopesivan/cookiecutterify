@@ -25,8 +25,17 @@ sed '/local.properties/ d' -i HelloAndroid.COPY/.gitignore
 
 # Entra no diretório da cópia e executa os comandos git
 pushd HelloAndroid.COPY >/dev/null
-rm -rf ./.project ./app/.project ./.settings ./app/.settings ./app/.classpath
-rm -rf .idea
+for path in \
+    ./.project \
+    ./app/.project \
+    ./.settings \
+    ./app/.settings \
+    ./app/.classpath \
+    ./.idea \
+    ./.git \
+    ./.google; do
+    [[ -e "$path" ]] && rm -rf -- "$path" && echo "[rm] $path"
+done
 git init
 git add .
 git commit -m "first commit"
