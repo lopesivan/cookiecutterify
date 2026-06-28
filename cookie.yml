@@ -32,3 +32,5 @@ variables:
     value: 17
   author:
     value: Ivan Lopes
+  xpackage_name:
+    value: com.example.android
