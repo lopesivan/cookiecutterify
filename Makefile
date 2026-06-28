@@ -12,4 +12,5 @@ dist: MyApplication
 
 clean:
 	#ls -d [[:alnum:]]*/| xargs rm -rf
-	rm -rf MyApplication/  MyApplication.cookiecutter/  MyApplication.COPY
+	rm -rf MyApplication MyApplication.cookiecutter MyApplication.COPY
+	rm -rf cookiecutter-android-game_activity_cpp-java
