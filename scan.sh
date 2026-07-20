@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-config="${CONFIG:-cookie.yml}"
-src="${SRC:-HelloAndroid.COPY}"
-dst="${DST:-HelloAndroid.cookiecutter}"
-out="${OUT:-cookiecutter-android-hello_android-kotlin}"
+#	./scan.sh $(CONFIG) $(SRC) $(DST) $(OUT)
+#
+config=$1
+src=$2
+dst=$3
+out=$4
 
 test -d $dst && rm -rf $dst
 test -d $out && rm -rf $out
@@ -110,28 +112,11 @@ main() {
 
     replace_file_contents
 
-    cp Makefile.orig HelloAndroid.cookiecutter/Makefile
-    cp -r mk HelloAndroid.cookiecutter/
-
-    cp ui-info.py.orig HelloAndroid.cookiecutter/ui-info.py
-
-    cp processa-taps.sh.orig HelloAndroid.cookiecutter/processa-taps.sh
-    cp tap-select.py.orig HelloAndroid.cookiecutter/tap-select.py
-    chmod +x HelloAndroid.cookiecutter/tap-select.py \
-        HelloAndroid.cookiecutter/processa-taps.sh
-
     rename_files
 
     mkdir ${out}
-    mv \{\{\ cookiecutter.__app_name_without_space\ \}\}.cookiecutter/ ${out}/\{\{\ cookiecutter.__app_name_without_space\ \}\}
-    cp cookiecutter.json.orig ${out}/cookiecutter.json
 
-    #rename_dirs
-    #make_cookiecutter_json
-    cat README.md.conf | sed \
-        -e 's/__PLATAFORM__/android/g' \
-        -e 's/__TEMPLATE_MODEL__/hello_android/g' \
-        -e 's/__LANGUAGE__/kotlin/g' >${out}/README.md
+    cp -r $dst $out/
 
     cp Makefile.test ${out}/Makefile
 
