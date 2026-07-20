@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-#	./scan.sh $(CONFIG) $(SRC) $(DST) $(OUT)
-#
-config=$1
-src=$2
-dst=$3
-out=$4
+# ./scan.sh $(REPONAME) $(CONFIG) $(SRC) $(DST) $(OUT)
+REPO_NAME=$1
+config=$2
+src=$3
+dst=$4
+out=$5
 
 test -d $dst && rm -rf $dst
 test -d $out && rm -rf $out
@@ -107,18 +107,50 @@ main() {
 
     load_variables
 
+    rm -rf "$dst"
     echo "[fase] copiando projeto"
+    echo cp -a -- "$src" "$dst"
     cp -a -- "$src" "$dst"
 
     replace_file_contents
 
+    # DEST="${REPO_NAME}.cookiecutter"
+    #
+    # pushd "${DEST}" >/dev/null
+    #
+    # # Arquivos de build.
+    # f=Makefile.orig
+    # cp ../$f ${f%.orig}
+    # # copia diretório
+    # cp -r ../mk .
+    #
+    # # Ferramentas.
+    # for f in \
+    #     ui-info.py.orig \
+    #     processa-taps.sh.orig \
+    #     tap-select.py.orig; do
+    #
+    #     cp "../$f" "${f%.orig}"
+    # done
+    #
+    # # Torna os scripts executáveis.
+    # chmod +x \
+    #     processa-taps.sh \
+    #     tap-select.py
+    #
+    # popd >/dev/null
+
     rename_files
 
     mkdir ${out}
+    mv '{{ cookiecutter.__app_name_without_space_lower }}.cookiecutter' ${out}/
 
-    cp -r $dst $out/
+    cp cookiecutter.json.orig ${out}/cookiecutter.json
 
     cp Makefile.test ${out}/Makefile
+
+    f=Makefile.test
+    cp $f ${out}/${f%.test}
 
     echo "[ok] template criado em: $dst"
 }
