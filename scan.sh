@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-config="${CONFIG:-cookie.yml}"
-src="${SRC:-HelloAndroid.COPY}"
-dst="${DST:-HelloAndroid.cookiecutter}"
-out="${OUT:-cookiecutter-android-hello_android-kotlin}"
+# ./scan.sh $(REPONAME) $(CONFIG) $(SRC) $(DST) $(OUT)
+REPO_NAME=$1
+config=$2
+src=$3
+dst=$4
+out=$5
 
 test -d $dst && rm -rf $dst
 test -d $out && rm -rf $out
@@ -110,30 +112,44 @@ main() {
 
     replace_file_contents
 
-    cp Makefile.orig HelloAndroid.cookiecutter/Makefile
-    cp -r mk HelloAndroid.cookiecutter/
+    DEST="${REPO_NAME}.cookiecutter"
 
-    cp ui-info.py.orig HelloAndroid.cookiecutter/ui-info.py
+    pushd "${DEST}" >/dev/null
 
-    cp processa-taps.sh.orig HelloAndroid.cookiecutter/processa-taps.sh
-    cp tap-select.py.orig HelloAndroid.cookiecutter/tap-select.py
-    chmod +x HelloAndroid.cookiecutter/tap-select.py \
-        HelloAndroid.cookiecutter/processa-taps.sh
+    # Arquivos de build.
+    f=Makefile.orig
+    cp ../$f ${f%.orig}
+    # copia diretório
+    cp -r ../mk .
+
+    # Ferramentas.
+    for f in \
+        ui-info.py.orig \
+        processa-taps.sh.orig \
+        tap-select.py.orig; do
+
+        cp "../$f" "${f%.orig}"
+    done
+
+    # Torna os scripts executáveis.
+    chmod +x \
+        processa-taps.sh \
+        tap-select.py
+
+    popd >/dev/null
 
     rename_files
 
     mkdir ${out}
-    mv \{\{\ cookiecutter.__app_name_without_space\ \}\}.cookiecutter/ ${out}/\{\{\ cookiecutter.__app_name_without_space\ \}\}
+    mv \{\{\ cookiecutter.__app_name_without_space\ \}\}.cookiecutter/ \
+        ${out}/\{\{\ cookiecutter.__app_name_without_space\ \}\}
+
     cp cookiecutter.json.orig ${out}/cookiecutter.json
 
-    #rename_dirs
-    #make_cookiecutter_json
-    cat README.md.conf | sed \
-        -e 's/__PLATAFORM__/android/g' \
-        -e 's/__TEMPLATE_MODEL__/hello_android/g' \
-        -e 's/__LANGUAGE__/kotlin/g' >${out}/README.md
-
     cp Makefile.test ${out}/Makefile
+
+    f=Makefile.test
+    cp $f ${out}/${f%.test}
 
     echo "[ok] template criado em: $dst"
 }
