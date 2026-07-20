@@ -6,26 +6,23 @@ set -o pipefail
 GITHUB_USER=$1
 REPO_NAME=$2
 PATCH=$3
-PACKAGE=$(yq -r ".variables.package_name.value" cookie.yml)
-
-# ${REPO_NAME}
-# ============
-#
 
 # Remove uma cópia anterior, se existir
 test -d ${REPO_NAME} && rm -rf ${REPO_NAME}
 
-#clona repositório
-git clone https://github.com/${GITHUB_USER}/${REPO_NAME}
-pushd ${REPO_NAME}
-echo aplica o patch
-echo git am ../${PATCH}
-git am ../${PATCH}
-popd >/dev/null
+USE_GIT_CLONE=true
+if $USE_GIT_CLONE; then
+    git clone "https://github.com/${GITHUB_USER}/${REPO_NAME}.git"
+
+    pushd "${REPO_NAME}" >/dev/null
+    git am "../${PATCH}"
+    popd >/dev/null
+else
+    tar xvzf "${REPO_NAME}.tar.gz"
+fi
 
 # ${REPO_NAME}.COPY
 # =================
-#
 
 # Remove uma cópia anterior, se existir
 test -d ${REPO_NAME}.COPY && rm -rf ${REPO_NAME}.COPY
@@ -33,10 +30,13 @@ test -d ${REPO_NAME}.COPY && rm -rf ${REPO_NAME}.COPY
 # Faz uma nova cópia
 cp -r ${REPO_NAME} ${REPO_NAME}.COPY
 
-# Entra no diretório
+# ----------------------------------------------------------------------------
+# 1) primeira açao: cópia e executa os comandos git
 pushd ${REPO_NAME}.COPY >/dev/null
 
-# remove arquivos de configuracao
+# Remove a linha 'local.properties' do .gitignore
+#sed '/local.properties/ d' -i .gitignore
+
 for path in \
     ./.project \
     ./app/.project \
@@ -50,13 +50,6 @@ for path in \
     [[ -e "$path" ]] && rm -rf -- "$path" && echo "[rm] $path"
 done
 
-# ----------------------------------------------------------------------------
-#
-# ... área para realizar alterações ...
-#
-# ----------------------------------------------------------------------------
-
-# cria um novo repositório e faz commit
 git init
 git add .
 git commit -m "first commit"
