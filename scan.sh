@@ -143,7 +143,7 @@ main() {
     rename_files
 
     mkdir ${out}
-    mv '{{ cookiecutter.__app_name_without_space_lower }}.cookiecutter' ${out}/
+    mv '{{ cookiecutter.__app_name_without_space_lower }}.cookiecutter' ${out}/'{{ cookiecutter.__app_name_without_space_lower }}'
 
     cp cookiecutter.json.orig ${out}/cookiecutter.json
 
