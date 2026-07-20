@@ -1,5 +1,5 @@
 # Configuração do repositório
-REPO        = HelloAndroid
+REPO        = template-mono
 REMOTE_REPO = https://github.com/lopesivan/$(REPO)
 LOCAL_REPO  = $(REPO)
 REVISION    = 0.1
@@ -52,23 +52,28 @@ git: ## Clona o repositório remoto
 
 diff: $(REPO) ## Gera um patch com as modificações customizadas
 	@echo "$(BLUE)→ Gerando patch...$(RESET)"
+	@rm -rf a b
+	@git clone --quiet $(REMOTE_REPO) a
+	@git clone --quiet $(LOCAL_REPO) b
 	@( \
-	git clone $(REMOTE_REPO) a 2>/dev/null; \
-	git clone $(LOCAL_REPO)  b 2>/dev/null; \
 	cd a; \
-	cp -r ../b/* .; \
-	git checkout -b doing 2>/dev/null; \
-	git add .; \
-	git commit -m "custom" --no-verify 2>/dev/null; \
+	rsync -a --delete --exclude='.git' ../b/. .; \
+	git checkout -b doing; \
+	git add -A; \
+	if git diff --cached --quiet; then \
+		echo "$(YELLOW)⚠ Nenhuma modificação detectada$(RESET)"; \
+		cd ..; rm -rf a b; \
+		exit 1; \
+	fi; \
+	git commit -m "custom" --no-verify; \
 	PATCH_NAME="$(REPO)-custom-$$(git log -n1 --format=format:'%h')-$$(date +%Y%m%d).patch"; \
 	git format-patch --stdout HEAD^ >../$${PATCH_NAME}; \
-	git checkout $(BRANCH) 2>/dev/null; \
-	git branch -D doing 2>/dev/null; \
 	cd ..; \
 	echo "$(GREEN)✓ Patch gerado: $${PATCH_NAME}$(RESET)"; \
 	sha256sum $${PATCH_NAME} | tee sha256.txt; \
 	echo "$(YELLOW)→ Execute 'make test' para testar o patch$(RESET)"; \
 	)
+
 
 ##@ Testes e Aplicação
 

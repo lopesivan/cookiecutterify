@@ -1,4 +1,4 @@
-cookiecutter-android-hello_android-kotlin
-HelloAndroid.COPY
-HelloAndroid.cookiecutter
-HelloAndroid
+cookiecutter-*
+template-mono.COPY
+template-mono.cookiecutter
+template-mono
