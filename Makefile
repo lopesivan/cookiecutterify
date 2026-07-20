@@ -1,6 +1,7 @@
 NAME           = template-mono
-PLATAFORM      = Linux
 GITHUB_USER    = lopesivan
+TEMPLATE_MODEL = basic_mono
+PLATAFORM      = linux
 LANGUAGE       = csharp
 
 # ----------------------------------------------------------------------------
@@ -8,8 +9,7 @@ LANGUAGE       = csharp
 # ----------------------------------------------------------------------------
 
 REPONAME       = $(NAME)
-TEMPLATE_MODEL = $(NAME)
-COOKIE         = cookiecutter-$(PLATAFORM)-$(NAME)-$(LANGUAGE)
+COOKIE         = cookiecutter-$(PLATAFORM)-$(TEMPLATE_MODEL)-$(LANGUAGE)
 PATCH          = $(wildcard *.patch)
 
 CONFIG         = cookie.yml
@@ -19,11 +19,13 @@ OUT            = $(COOKIE)
 
 all: init scan
 
+all: init scan
+
 init:
 	./init.sh $(GITHUB_USER) $(REPONAME) $(PATCH)
 
 scan:
-	./scan.sh $(CONFIG) $(SRC) $(DST) $(OUT)
+	./scan.sh $(REPONAME) $(CONFIG) $(SRC) $(DST) $(OUT)
 	cat README.md.conf | sed \
         -e 's/__PLATAFORM__/$(PLATAFORM)/g' \
         -e 's/__TEMPLATE_MODEL__/$(TEMPLATE_MODEL)/g' \
@@ -35,8 +37,8 @@ dist: $(NAME)
 
 clean:
 	#ls -d [[:alnum:]]*/| xargs rm -rf
-	rm -rf $(NAME) \
 	rm -rf \
-	$(COOKIE) \
-	$(NAME).cookiecutter \
+	$(NAME) \
 	$(NAME).COPY \
+	$(NAME).cookiecutter \
+	$(COOKIE)
