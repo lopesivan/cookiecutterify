@@ -18,5 +18,5 @@ variables:
     value: Ivan Lopes
   mono_exe:
     value: /usr/bin/mono
-  msbuild_EXE:
+  msbuild_exe:
     value: /usr/bin/msbuild
