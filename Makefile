@@ -2,7 +2,7 @@ NAME           = MyApplication
 TEMPLATE_MODEL = native_cpp
 PLATAFORM      = android
 GITHUB_USER    = lopesivan
-LANGUAGE       = kotlin
+LANGUAGE       = java
 
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------
