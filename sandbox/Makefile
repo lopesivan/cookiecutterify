@@ -1,6 +1,8 @@
 # Configuração do repositório
-REPO        = template-mono
-REMOTE_REPO = https://github.com/lopesivan/$(REPO)
+NAME        = template-mono
+GITHUB_USER = lopesivan
+REPO        = $(NAME)
+REMOTE_REPO = https://github.com/$(GITHUB_USER)/$(REPO)
 LOCAL_REPO  = $(REPO)
 REVISION    = 0.1
 BRANCH      = main
