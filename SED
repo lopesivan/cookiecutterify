@@ -1,2 +1,0 @@
-
-sed 's/MyApplication/HelloAndroid/g' -i ./Makefile.test ./cookie.yml ./init.sh ./scan.sh
