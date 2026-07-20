@@ -1,0 +1,157 @@
+From 49caf1aee2439cef6d9b7495d51e269014bfb388 Mon Sep 17 00:00:00 2001
+From: Ivan Lopes <lopesivan.ufrj@gmail.com>
+Date: Mon, 20 Jul 2026 16:10:15 -0300
+Subject: [PATCH] custom
+
+---
+ .gitignore | 96 ------------------------------------------------------
+ Makefile   | 34 +++++++++++++++++++
+ 2 files changed, 34 insertions(+), 96 deletions(-)
+ delete mode 100644 .gitignore
+ create mode 100644 Makefile
+
+diff --git a/.gitignore b/.gitignore
+deleted file mode 100644
+index fac3e40..0000000
+--- a/.gitignore
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# Created by https://www.toptal.com/developers/gitignore/api/c++,autotools
+-# Edit at https://www.toptal.com/developers/gitignore?templates=c++,autotools
+-
+-### Autotools ###
+-# http://www.gnu.org/software/automake
+-
+-Makefile.in
+-/ar-lib
+-/mdate-sh
+-/py-compile
+-/test-driver
+-/ylwrap
+-.deps/
+-.dirstamp
+-
+-# http://www.gnu.org/software/autoconf
+-
+-autom4te.cache
+-/autoscan.log
+-/autoscan-*.log
+-/aclocal.m4
+-/compile
+-/config.cache
+-/config.guess
+-/config.h.in
+-/config.log
+-/config.status
+-/config.sub
+-/configure
+-/configure.scan
+-/depcomp
+-/install-sh
+-/missing
+-/stamp-h1
+-
+-# https://www.gnu.org/software/libtool/
+-
+-/ltmain.sh
+-
+-# http://www.gnu.org/software/texinfo
+-
+-/texinfo.tex
+-
+-# http://www.gnu.org/software/m4/
+-
+-m4/libtool.m4
+-m4/ltoptions.m4
+-m4/ltsugar.m4
+-m4/ltversion.m4
+-m4/lt~obsolete.m4
+-
+-# Generated Makefile
+-# (meta build system like autotools,
+-# can automatically generate from config.status script
+-# (which is called by configure script))
+-Makefile
+-
+-### Autotools Patch ###
+-
+-### C++ ###
+-# Prerequisites
+-*.d
+-
+-# Compiled Object files
+-*.slo
+-*.lo
+-*.o
+-*.obj
+-
+-# Precompiled Headers
+-*.gch
+-*.pch
+-
+-# Compiled Dynamic libraries
+-*.so
+-*.dylib
+-*.dll
+-
+-# Fortran module files
+-*.mod
+-*.smod
+-
+-# Compiled Static libraries
+-*.lai
+-*.la
+-*.a
+-*.lib
+-
+-# Executables
+-*.exe
+-*.out
+-*.app
+-
+-bin/*
+-obj/*
+-# End of https://www.toptal.com/developers/gitignore/api/c++,autotools
+diff --git a/Makefile b/Makefile
+new file mode 100644
+index 0000000..02554af
+--- /dev/null
++++ b/Makefile
+@@ -0,0 +1,34 @@
++CSPROJ  = main.csproj
++RELEASE = bin/Release/main.exe
++DEBUG   = bin/Debug/main.exe
++
++MONO    = /usr/bin/mono
++MSBUILD = /usr/bin/msbuild
++
++all: debug
++clean: clean-debug
++run: run-debug
++
++run-release:
++	$(MONO) $(RELEASE)
++
++release:
++	$(MSBUILD) /p:Configuration=Release $(CSPROJ)
++
++rebuild-release:
++	$(MSBUILD) $(CSPROJ) -t:Rebuild -p:Configuration=Release
++
++clean-release:
++	$(MSBUILD) $(CSPROJ) -t:Clean -p:Configuration=Release
++
++run-debug:
++	$(MONO) $(DEBUG)
++
++debug:
++	$(MSBUILD) $(CSPROJ)
++
++rebuild-debug:
++	$(MSBUILD) $(CSPROJ) -t:Rebuild -p:Configuration=Debug
++
++clean-debug:
++	$(MSBUILD) $(CSPROJ) -t:Clean -p:Configuration=Debug
+-- 
+2.51.0
+
