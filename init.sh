@@ -3,32 +3,40 @@ set -e # Encerra em caso de erro
 set -u # Trata variáveis não definidas como erro
 set -o pipefail
 
+GITHUB_USER=$1
+REPO_NAME=$2
+PATCH=$3
 PACKAGE=$(yq -r ".variables.package_name.value" cookie.yml)
 
-# Copia o projeto original para o diretório atual
-#cp -r /workspace/AndroidStudioProjects/HelloAndroid .
+# ${REPO_NAME}
+# ============
+#
 
 # Remove uma cópia anterior, se existir
-test -d HelloAndroid && rm -rf HelloAndroid
+test -d ${REPO_NAME} && rm -rf ${REPO_NAME}
 
 #clona repositório
-git clone https://github.com/lopesivan/HelloAndroid
-pushd HelloAndroid
+git clone https://github.com/${GITHUB_USER}/${REPO_NAME}
+pushd ${REPO_NAME}
 echo aplica o patch
-git am ../HelloAndroid-custom-5cc26bd-20260628.patch
+echo git am ../${PATCH}
+git am ../${PATCH}
 popd >/dev/null
 
+# ${REPO_NAME}.COPY
+# =================
+#
+
 # Remove uma cópia anterior, se existir
-test -d HelloAndroid.COPY && rm -rf HelloAndroid.COPY
+test -d ${REPO_NAME}.COPY && rm -rf ${REPO_NAME}.COPY
 
 # Faz uma nova cópia
-cp -r HelloAndroid HelloAndroid.COPY
+cp -r ${REPO_NAME} ${REPO_NAME}.COPY
 
-# Remove a linha 'local.properties' do .gitignore
-sed '/local.properties/ d' -i HelloAndroid.COPY/.gitignore
+# Entra no diretório
+pushd ${REPO_NAME}.COPY >/dev/null
 
-# Entra no diretório da cópia e executa os comandos git
-pushd HelloAndroid.COPY >/dev/null
+# remove arquivos de configuracao
 for path in \
     ./.project \
     ./app/.project \
@@ -41,30 +49,19 @@ for path in \
     ./.google; do
     [[ -e "$path" ]] && rm -rf -- "$path" && echo "[rm] $path"
 done
+
+# ----------------------------------------------------------------------------
+#
+# ... área para realizar alterações ...
+#
+# ----------------------------------------------------------------------------
+
+# cria um novo repositório e faz commit
 git init
 git add .
 git commit -m "first commit"
 git clean -dfx
 
-#PACKAGE=com.example.android.helloandroid
-pattern="${PACKAGE//./\/}"
-
-while IFS= read -r line; do
-    echo "=$line="
-    dir="${line%$pattern}" # ex: ./app/src/main/kotlin/
-    top="${pattern%%/*}"   # ex: com
-
-    pushd "$dir" >/dev/null
-    mv -- "$pattern" __PACKAGE__
-    rm -rf -- "$top"
-    # echo "mv $pattern -> __PACKAGE__"
-    # echo "rm -rf $top"
-    popd >/dev/null
-
-    #done < <(find . -depth -type d | grep "$pattern")
-done < <(find . -type d | grep "$pattern$")
-#                                       ^
-#                         ancora no fim: ignora ui/theme e ui
 tree .
 popd >/dev/null
 
