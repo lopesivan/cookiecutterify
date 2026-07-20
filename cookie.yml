@@ -1,34 +1,10 @@
 ---
 variables:
   app_name:
-    value: Hello Android
-  package_name:
-    value: com.example.android.helloandroid
-  main_activity:
-    value: MainActivity
-  java_jni_method:
-    value: stringFromJNI
-  __app_name_without_space:
-    value: HelloAndroid
-  __app_name_without_space_lower:
-    value: myapplication
-  __app_name_without_space_upper:
-    value: MYAPPLICATION
-  __java_jni_interface:
-    value: Java_com_example_myapplication
-  __package_dir:
-    value: __PACKAGE__
-  target_sdk_version:
-    value: 37
-  target_api_version:
-    value: 36
-  min_sdk_version:
-    value: 23
-  sdk_dir:
-    value: /home/ivan/Android/Sdk
-  cmake_version:
-    value: 3.22.1
-  cpp_version:
-    value: 17
+    value: main
+  namespace_name:
+    value: App
+  greater_message:
+    value: Olá Mundo csproj
   author:
     value: Ivan Lopes
