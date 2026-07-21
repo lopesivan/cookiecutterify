@@ -10,16 +10,16 @@ PATCH=$3
 # Remove uma cópia anterior, se existir
 test -d ${REPO_NAME} && rm -rf ${REPO_NAME}
 
-USE_GIT_CLONE=true
+USE_GIT_CLONE=false
 if $USE_GIT_CLONE; then
     git clone "https://github.com/${GITHUB_USER}/${REPO_NAME}.git"
-
-    pushd "${REPO_NAME}" >/dev/null
-    git am "../${PATCH}"
-    popd >/dev/null
 else
-    tar xvzf "${REPO_NAME}.tar.gz"
+    tar xvzf "${REPO_NAME}.tgz"
 fi
+
+pushd "${REPO_NAME}" >/dev/null
+git am "../${PATCH}"
+popd >/dev/null
 
 # ${REPO_NAME}.COPY
 # =================
