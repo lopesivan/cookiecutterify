@@ -1,6 +1,6 @@
-NAME           = template-mono
+NAME           = myapp
 GITHUB_USER    = lopesivan
-TEMPLATE_MODEL = basic_mono
+TEMPLATE_MODEL = dotnet_console
 PLATAFORM      = linux
 LANGUAGE       = csharp
 
