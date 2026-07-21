@@ -1,22 +1,20 @@
 ---
 variables:
   app_name:
-    value: Template Mono
+    value: My App
   __app_name_without_space:
-    value: TemplateMono
+    value: MyApp
   __app_name_without_space_lower:
-    value: template-mono
+    value: myapp
   __app_name_without_space_upper:
-    value: TEMPLATE-MONO
+    value: MYAPP
   namespace:
     value: App
   program_name:
-    value: main
+    value: Program
   message:
-    value: Olá Mundo csproj
+    value: Hello, World!
   author:
     value: Ivan Lopes
-  mono_exe:
-    value: /usr/bin/mono
-  msbuild_exe:
-    value: /usr/bin/msbuild
+  dotnet:
+    value: /home/ivan/.dotnet/dotnet
