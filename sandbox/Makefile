@@ -1,8 +1,8 @@
 # Configuração do repositório
-NAME        = template-mono
+NAME        = myapp
 GITHUB_USER = lopesivan
 REPO        = $(NAME)
-REMOTE_REPO = https://github.com/$(GITHUB_USER)/$(REPO)
+REMOTE_REPO = ../$(NAME).tgz
 LOCAL_REPO  = $(REPO)
 REVISION    = 0.1
 BRANCH      = main
@@ -46,28 +46,30 @@ git: ## Clona o repositório remoto
 		echo "$(YELLOW)⚠ Repositório $(REPO) já existe$(RESET)"; \
 	else \
 		echo "$(BLUE)→ Clonando $(REMOTE_REPO)...$(RESET)"; \
-		git clone $(REMOTE_REPO); \
+		tar xvzf $(REMOTE_REPO); \
 		echo "$(GREEN)✓ Repositório clonado com sucesso$(RESET)"; \
 	fi
 
 ##@ Geração de Patches
-
 diff: $(REPO) ## Gera um patch com as modificações customizadas
 	@echo "$(BLUE)→ Gerando patch...$(RESET)"
 	@rm -rf a b
-	@git clone --quiet $(REMOTE_REPO) a
-	@git clone --quiet $(LOCAL_REPO) b
+	@cp -r $(NAME) b
+	@mkdir a
+	@tar xzf $(REMOTE_REPO) -C a --strip-components=1
 	@( \
 	cd a; \
+	git init -q; \
+	git add -A; \
+	git commit -q -m "baseline" --no-verify --allow-empty; \
 	rsync -a --delete --exclude='.git' ../b/. .; \
-	git checkout -b doing; \
 	git add -A; \
 	if git diff --cached --quiet; then \
 		echo "$(YELLOW)⚠ Nenhuma modificação detectada$(RESET)"; \
 		cd ..; rm -rf a b; \
 		exit 1; \
 	fi; \
-	git commit -m "custom" --no-verify; \
+	git commit -q -m "custom" --no-verify; \
 	PATCH_NAME="$(REPO)-custom-$$(git log -n1 --format=format:'%h')-$$(date +%Y%m%d).patch"; \
 	git format-patch --stdout HEAD^ >../$${PATCH_NAME}; \
 	cd ..; \
@@ -75,7 +77,6 @@ diff: $(REPO) ## Gera um patch com as modificações customizadas
 	sha256sum $${PATCH_NAME} | tee sha256.txt; \
 	echo "$(YELLOW)→ Execute 'make test' para testar o patch$(RESET)"; \
 	)
-
 
 ##@ Testes e Aplicação
 
