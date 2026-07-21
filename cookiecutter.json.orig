@@ -1,10 +1,9 @@
 {
-    "app_name": "Template Mono",
+    "app_name": "My App",
     "namespace": "App",
-    "program_name": "main",
+    "program_name": "Program",
     "message": "Olá Mundo!",
-    "mono_exe": "mono",
-    "msbuild_exe": "msbuild",
+    "dotnet": "`which dotnet`",
     "__app_name_without_space": "{{ cookiecutter.app_name|replace(' ', '-') }}",
     "__app_name_without_space_lower": "{{ cookiecutter.__app_name_without_space|lower }}",
     "__app_name_without_space_upper": "{{ cookiecutter.__app_name_without_space|upper }}"
