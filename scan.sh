@@ -145,9 +145,8 @@ main() {
     mkdir ${out}
     mv '{{ cookiecutter.__app_name_without_space_lower }}.cookiecutter' ${out}/'{{ cookiecutter.__app_name_without_space_lower }}'
 
-    cp cookiecutter.json.orig ${out}/cookiecutter.json
-
-    cp Makefile.test ${out}/Makefile
+    f=cookiecutter.json.orig
+    cp $f ${out}/${f%.orig}
 
     f=Makefile.test
     cp $f ${out}/${f%.test}
