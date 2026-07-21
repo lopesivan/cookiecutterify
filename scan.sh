@@ -147,8 +147,6 @@ main() {
 
     cp cookiecutter.json.orig ${out}/cookiecutter.json
 
-    cp Makefile.test ${out}/Makefile
-
     f=Makefile.test
     cp $f ${out}/${f%.test}
 
