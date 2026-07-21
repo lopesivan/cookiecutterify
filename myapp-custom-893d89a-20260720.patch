@@ -1,0 +1,95 @@
+From 893d89a45c7fd782f8fdd645502b9e89ec869550 Mon Sep 17 00:00:00 2001
+From: Ivan Lopes <lopesivan.ufrj@gmail.com>
+Date: Mon, 20 Jul 2026 22:28:44 -0300
+Subject: [PATCH] custom
+
+---
+ Makefile | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 57b49da..91c5c7f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,10 +1,11 @@
+ # 🔨 Makefile para projeto C# .NET - myapp
+-# Gerado automaticamente pelo tmpl-dotnet.sh
++# Gerado automaticamente pelo tmpl-$(DOTNET).sh
+ CSPROJ       = myapp.csproj
+ PROJECT_NAME = myapp
+ RELEASE_DIR  = bin/Release
+ DEBUG_DIR    = bin/Debug
+ PUBLISH_DIR  = bin/publish
++DOTNET       = /home/ivan/.dotnet/dotnet
+ 
+ # 🎯 Alvos padrão
+ .PHONY: all clean run run-debug run-release release debug \
+@@ -18,21 +19,21 @@ run: run-debug
+ 
+ run-release:
+ 	@echo "🚀 Executando versão Release..."
+-	dotnet run -c Release --project $(CSPROJ)
++	$(DOTNET) run -c Release --project $(CSPROJ)
+ 
+ run-debug:
+ 	@echo "🐛 Executando versão Debug..."
+-	dotnet run -c Debug --project $(CSPROJ)
++	$(DOTNET) run -c Debug --project $(CSPROJ)
+ 
+ # 🔧 Compilação
+ release:
+ 	@echo "📦 Compilando versão Release..."
+-	dotnet build -c Release $(CSPROJ)
++	$(DOTNET) build -c Release $(CSPROJ)
+ 	@echo "✅ Release compilado com sucesso!"
+ 
+ debug:
+ 	@echo "🐛 Compilando versão Debug..."
+-	dotnet build -c Debug $(CSPROJ)
++	$(DOTNET) build -c Debug $(CSPROJ)
+ 	@echo "✅ Debug compilado com sucesso!"
+ 
+ # 🔄 Rebuild
+@@ -40,11 +41,11 @@ rebuild: rebuild-debug
+ 
+ rebuild-release: clean-release
+ 	@echo "🔄 Recompilando versão Release..."
+-	dotnet build -c Release $(CSPROJ)
++	$(DOTNET) build -c Release $(CSPROJ)
+ 
+ rebuild-debug: clean-debug
+ 	@echo "🔄 Recompilando versão Debug..."
+-	dotnet build -c Debug $(CSPROJ)
++	$(DOTNET) build -c Debug $(CSPROJ)
+ 
+ # 🧹 Limpeza
+ clean: clean-debug clean-release
+@@ -53,21 +54,21 @@ clean: clean-debug clean-release
+ 
+ clean-release:
+ 	@echo "🧹 Limpando versão Release..."
+-	dotnet clean -c Release $(CSPROJ)
++	$(DOTNET) clean -c Release $(CSPROJ)
+ 
+ clean-debug:
+ 	@echo "🧹 Limpando versão Debug..."
+-	dotnet clean -c Debug $(CSPROJ)
++	$(DOTNET) clean -c Debug $(CSPROJ)
+ 
+ # 📋 Teste
+ test:
+ 	@echo "🧪 Executando testes..."
+-	@if [ -d "tests" ]; then dotnet test; else echo "⚠️  Nenhum teste configurado"; fi
++	@if [ -d "tests" ]; then $(DOTNET) test; else echo "⚠️  Nenhum teste configurado"; fi
+ 
+ # 📦 Publish (self-contained, pronto pra distribuir)
+ publish:
+ 	@echo "📦 Publicando $(PROJECT_NAME)..."
+-	dotnet publish -c Release -o $(PUBLISH_DIR) $(CSPROJ)
++	$(DOTNET) publish -c Release -o $(PUBLISH_DIR) $(CSPROJ)
+ 	@echo "✅ Publicado em $(PUBLISH_DIR)/"
+ 
+ # 📦 Instalação (copia para /usr/local/bin)
+-- 
+2.51.0
+
