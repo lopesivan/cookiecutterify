@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Lê a saída de `make ls`, filtra linhas com `adb ... input tap`,
-apresenta seletor interativo e executa o tap selecionado.
+apresenta seletor interativo e executa o tap selecionad3.
 
 Uso:
     make ls | ./tap-select.py
