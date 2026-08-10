@@ -121,6 +121,7 @@ main() {
     cp ../$f ${f%.orig}
     # copia diretório
     cp -r ../mk .
+    cp -r ../script/* .
 
     # Ferramentas.
     for f in \
