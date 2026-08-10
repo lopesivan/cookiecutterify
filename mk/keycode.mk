@@ -1,4 +1,36 @@
 # =============================================================================
+# Navegação principal
+# =============================================================================
+back: ## envia botão voltar
+	$(KEYEVENT) KEYCODE_BACK
+home: ## envia botão home
+	$(KEYEVENT) KEYCODE_HOME
+menu: ## envia botão menu
+	$(KEYEVENT) KEYCODE_MENU
+ok: ## envia botão OK (dpad center)
+	$(KEYEVENT) KEYCODE_DPAD_CENTER
+recents: ## abre apps recentes
+	$(KEYEVENT) KEYCODE_APP_SWITCH
+search: ## abre busca
+	$(KEYEVENT) KEYCODE_SEARCH
+assist: ## abre assistente (API 19)
+	$(KEYEVENT) KEYCODE_ASSIST
+voice-assist: ## assistente de voz (API 21)
+	$(KEYEVENT) KEYCODE_VOICE_ASSIST
+all-apps: ## todos os apps (API 28)
+	$(KEYEVENT) KEYCODE_ALL_APPS
+refresh: ## atualiza (API 28)
+	$(KEYEVENT) KEYCODE_REFRESH
+# help: ## abre ajuda (API 23)
+# 	$(KEYEVENT) KEYCODE_HELP
+settings: ## abre configurações
+	$(KEYEVENT) KEYCODE_SETTINGS
+notification: ## abre notificações
+	$(KEYEVENT) KEYCODE_NOTIFICATION
+profile-switch: ## troca perfil (API 29)
+	$(KEYEVENT) KEYCODE_PROFILE_SWITCH
+
+# =============================================================================
 # Dpad
 # =============================================================================
 dpad-up: ## dpad para cima
