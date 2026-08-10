@@ -118,6 +118,8 @@ mkdir -p "$GLUE_JNI_DIR" "$GLUE_CPP_DIR" "$JAVA_GEN_DIR"
     --java-out "$JAVA_GEN_DIR" \
     --java-package "${APP_ID}.generated" \
     --jni-out "$GLUE_JNI_DIR" \
+    --ident-jni-class NativeFooBar \
+    --ident-jni-file NativeFooBar \
     --cpp-out "$GLUE_CPP_DIR" \
     --cpp-namespace generated \
     --idl "$IDL_DIR/greeter.djinni"
@@ -127,11 +129,18 @@ echo "  $JAVA_GEN_DIR"
 echo "  $GLUE_JNI_DIR"
 echo "  $GLUE_CPP_DIR"
 
+if [ ! -f "$GLUE_JNI_DIR/NativeGreeter.cpp" ]; then
+    echo "ERRO: $GLUE_JNI_DIR/NativeGreeter.cpp não foi gerado."
+    echo "Conteúdo real de $GLUE_JNI_DIR:"
+    ls -la "$GLUE_JNI_DIR" || true
+    exit 1
+fi
+
 # ----------------------------------------
 # 4. Implementação C++ (GreeterImpl.cpp)
 # ----------------------------------------
 cat > "$CPP_DIR/GreeterImpl.cpp" <<'EOF'
-#include "generated/greeter.hpp"
+#include "Greeter.hpp"
 
 class GreeterImpl : public generated::Greeter
 {
