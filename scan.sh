@@ -123,14 +123,14 @@ main() {
     cp -r ../mk .
     cp -r ../script/* .
 
-    # Ferramentas.
-    for f in \
-        ui-info.py.orig \
-        processa-taps.sh.orig \
-        tap-select.py.orig; do
-
-        cp "../$f" "${f%.orig}"
-    done
+    # # Ferramentas.
+    # for f in \
+    #     ui-info.py.orig \
+    #     processa-taps.sh.orig \
+    #     tap-select.py.orig; do
+    #
+    #     cp "../$f" "${f%.orig}"
+    # done
 
     # Torna os scripts executáveis.
     chmod +x \
